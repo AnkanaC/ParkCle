@@ -151,7 +151,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  LatLng _currentLocation = LatLng(22.568749908401628, 88.38604742411138);
+  LatLng _currentLocation = const LatLng(22.568749908401628, 88.38604742411138);
   List<Map<String, dynamic>> _parkingSpots = [];
 
   @override
@@ -259,17 +259,17 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 10),
               Expanded(
                 child: _parkingSpots.isEmpty
-                    ? Center(child: CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : ListView.builder(
                         itemCount: _parkingSpots.length,
                         itemBuilder: (context, index) {
                           var spot = _parkingSpots[index];
                           return Card(
-                            margin: EdgeInsets.symmetric(vertical: 5),
+                            margin: const EdgeInsets.symmetric(vertical: 5),
                             child: ListTile(
                               title: Text(spot["name"],
                                   style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
+                                      const TextStyle(fontWeight: FontWeight.bold)),
                               subtitle: Text(
                                   "${spot["address"]}\nDistance: ${spot["distance"].toStringAsFixed(2)} km"),
                               trailing: Chip(
@@ -309,9 +309,9 @@ class _HomePageState extends State<HomePage> {
             ),
             markers: {
               Marker(
-                markerId: MarkerId("currentLocation"),
+                markerId: const MarkerId("currentLocation"),
                 position: _currentLocation,
-                infoWindow: InfoWindow(title: "You are here"),
+                infoWindow: const InfoWindow(title: "You are here"),
               )
             },
           ),
@@ -321,10 +321,10 @@ class _HomePageState extends State<HomePage> {
             right: 20,
             child: ElevatedButton(
               onPressed: _fetchParkingSpots,
-              child: const Text("Show Nearby Parking"),
               style: ElevatedButton.styleFrom(
                 fixedSize: const Size(200, 50),
               ),
+              child: const Text("Show Nearby Parking"),
             ),
           ),
         ],
