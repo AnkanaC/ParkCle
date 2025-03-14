@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "142473796180",
+    "project_id": "parkcle-5ccd4",
+    "storage_bucket": "parkcle-5ccd4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142473796180:android:68c04d9390ebd19c336bc1",
+        "android_client_info": {
+          "package_name": "com.example.parkcle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0UKTnf6-CsrGX5QXPM6o0zvjj2gUkEVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -89,7 +89,7 @@
 //                             padding: const EdgeInsets.all(16.0),
 //                             child: Column(
 //                               mainAxisSize: MainAxisSize.max,
-//                               crossAxisAlignment: CrossAxisAlignment.stretch, 
+//                               crossAxisAlignment: CrossAxisAlignment.stretch,
 //                               children: [
 //                                 const Text(
 //                                   "This is a bottom sheet",
@@ -151,7 +151,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  LatLng _currentLocation = LatLng(22.568749908401628, 88.38604742411138);
+  LatLng _currentLocation = const LatLng(22.568749908401628, 88.38604742411138);
   List<Map<String, dynamic>> _parkingSpots = [];
 
   @override
@@ -188,7 +188,8 @@ class _HomePageState extends State<HomePage> {
         double lng = place["geometry"]["location"]["lng"];
         String name = place["name"];
         String address = place["vicinity"] ?? "No address available";
-        double distance = _calculateDistance(_currentLocation.latitude, _currentLocation.longitude, lat, lng);
+        double distance = _calculateDistance(
+            _currentLocation.latitude, _currentLocation.longitude, lat, lng);
         String availability = _getAvailability();
 
         spots.add({
@@ -213,16 +214,16 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  double _calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  double _calculateDistance(
+      double lat1, double lon1, double lat2, double lon2) {
     const double R = 6371;
     double dLat = (lat2 - lat1) * (3.141592653589793 / 180);
     double dLon = (lon2 - lon1) * (3.141592653589793 / 180);
 
-    double a = 
-        (sin(dLat / 2) * sin(dLat / 2)) +
+    double a = (sin(dLat / 2) * sin(dLat / 2)) +
         cos(lat1 * (3.141592653589793 / 180)) *
-        cos(lat2 * (3.141592653589793 / 180)) *
-        (sin(dLon / 2) * sin(dLon / 2));
+            cos(lat2 * (3.141592653589793 / 180)) *
+            (sin(dLon / 2) * sin(dLon / 2));
 
     double c = 2 * atan2(sqrt(a), sqrt(1 - a));
     return R * c;
@@ -238,16 +239,14 @@ class _HomePageState extends State<HomePage> {
       context: context,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       isScrollControlled: true,
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.all(16.0),
-          height: MediaQuery.of(context).size.height * 0.6, // Make it scrollable
+          height: MediaQuery.of(context).size.height * 0.6,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -260,23 +259,27 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 10),
               Expanded(
                 child: _parkingSpots.isEmpty
-                    ? Center(child: CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : ListView.builder(
                         itemCount: _parkingSpots.length,
                         itemBuilder: (context, index) {
                           var spot = _parkingSpots[index];
                           return Card(
-                            margin: EdgeInsets.symmetric(vertical: 5),
+                            margin: const EdgeInsets.symmetric(vertical: 5),
                             child: ListTile(
-                              title: Text(spot["name"], style: TextStyle(fontWeight: FontWeight.bold)),
-                              subtitle: Text("${spot["address"]}\nDistance: ${spot["distance"].toStringAsFixed(2)} km"),
+                              title: Text(spot["name"],
+                                  style:
+                                      const TextStyle(fontWeight: FontWeight.bold)),
+                              subtitle: Text(
+                                  "${spot["address"]}\nDistance: ${spot["distance"].toStringAsFixed(2)} km"),
                               trailing: Chip(
                                 label: Text(spot["availability"]),
-                                backgroundColor: spot["availability"] == "Available"
-                                    ? Colors.green
-                                    : spot["availability"] == "Limited"
-                                        ? Colors.orange
-                                        : Colors.red,
+                                backgroundColor:
+                                    spot["availability"] == "Available"
+                                        ? Colors.green
+                                        : spot["availability"] == "Limited"
+                                            ? Colors.orange
+                                            : Colors.red,
                               ),
                             ),
                           );
@@ -306,9 +309,9 @@ class _HomePageState extends State<HomePage> {
             ),
             markers: {
               Marker(
-                markerId: MarkerId("currentLocation"),
+                markerId: const MarkerId("currentLocation"),
                 position: _currentLocation,
-                infoWindow: InfoWindow(title: "You are here"),
+                infoWindow: const InfoWindow(title: "You are here"),
               )
             },
           ),
@@ -318,6 +321,9 @@ class _HomePageState extends State<HomePage> {
             right: 20,
             child: ElevatedButton(
               onPressed: _fetchParkingSpots,
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(200, 50),
+              ),
               child: const Text("Show Nearby Parking"),
             ),
           ),
