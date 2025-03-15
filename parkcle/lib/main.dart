@@ -27,7 +27,7 @@ class GradientText extends StatelessWidget {
   const GradientText(
     this.text, {super.key, 
     required this.gradient,
-    this.style,
+    this.style
   });
 
   final String text;

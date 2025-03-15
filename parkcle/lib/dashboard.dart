@@ -140,6 +140,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
+import 'package:parkcle/booking.dart';
 
 const String googleApiKey = "AIzaSyDtNrQSq-Uc8nmqY2nfn67sPQtMo-WDZm8";
 
@@ -267,20 +268,29 @@ class _HomePageState extends State<HomePage> {
                           return Card(
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             child: ListTile(
-                              title: Text(spot["name"],
-                                  style:
-                                      const TextStyle(fontWeight: FontWeight.bold)),
+                              title: Text(
+                                spot["name"],
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               subtitle: Text(
                                   "${spot["address"]}\nDistance: ${spot["distance"].toStringAsFixed(2)} km"),
                               trailing: Chip(
                                 label: Text(spot["availability"]),
-                                backgroundColor:
-                                    spot["availability"] == "Available"
-                                        ? Colors.green
-                                        : spot["availability"] == "Limited"
-                                            ? Colors.orange
-                                            : Colors.red,
+                                backgroundColor: spot["availability"] == "Available"
+                                    ? Colors.green
+                                    : spot["availability"] == "Limited"
+                                    ? Colors.orange
+                                    : Colors.red,
                               ),
+                              onTap: () {
+                                // Navigate to DetailPage and pass data
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BookingPage(),
+                                  ),
+                                );
+                              },
                             ),
                           );
                         },
