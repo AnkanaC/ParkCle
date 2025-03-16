@@ -23,6 +23,15 @@ class _BookingPageState extends State<BookingPage> {
   double fees = 10.0;
   List<double> numbers = [10.0, 15.0, 20.0, 25.0, 30.0];
 
+  @override
+  void initState(){
+    super.initState();
+    _updateTime();
+    calculateTotalFees();
+    getFees();
+    hourController.addListener(calculateTotalFees);
+  }
+
   void getFees(){
     int randomIndex = Random().nextInt(numbers.length);
     fees = numbers[randomIndex];
@@ -30,17 +39,17 @@ class _BookingPageState extends State<BookingPage> {
 
   double totalFees = 10.0;
 
+  @override
+  void dispose() {
+    hourController.dispose();
+    super.dispose();
+  }
+
   void calculateTotalFees() {
     setState(() {
       double hours = double.tryParse(hourController.text) ?? 0;
       totalFees = fees * hours;
     });
-  }
-
-  @override
-  void initState(){
-    super.initState();
-    _updateTime();
   }
 
   void _updateTime(){
@@ -92,8 +101,10 @@ class _BookingPageState extends State<BookingPage> {
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset('assets/logo.png', height: 50),
                     const  GradientText(
@@ -199,6 +210,8 @@ class _BookingPageState extends State<BookingPage> {
                             ),
                           ),
 
+                          const SizedBox(width: 20),
+
                           Expanded(
                             child: TextField(
                               controller: hourController,
@@ -217,7 +230,7 @@ class _BookingPageState extends State<BookingPage> {
 
                       Center(
                         child : Text(
-                          "Total Fees : \$${totalFees.toStringAsFixed(2)}",
+                          "Total Fees : ₹${totalFees.toStringAsFixed(2)}",
                           style: const TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,

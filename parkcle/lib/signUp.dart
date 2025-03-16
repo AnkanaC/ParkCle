@@ -4,6 +4,8 @@ import 'package:parkcle/login.dart';
 import 'package:parkcle/main.dart';
 import 'package:email_validator/email_validator.dart';
 
+import 'booking.dart';
+
 class Signup extends StatefulWidget {
   const Signup({super.key});
 
@@ -192,7 +194,7 @@ class _SignupState extends State<Signup> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const HomePage()),
+                                      builder: (context) => const BookingPage()),//HomePage()),
                                 );
                             }
                           },
