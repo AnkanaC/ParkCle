@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:parkcle/dashboard.dart';
 import 'package:parkcle/login.dart';
@@ -21,6 +22,14 @@ class _SignupState extends State<Signup> {
   final _ageController = TextEditingController();
   final _licenseController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  Future<void> createUserWithEmailAndPassword() async {
+    final UserCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -189,18 +198,28 @@ class _SignupState extends State<Signup> {
                         ),
                         const SizedBox(height: 24),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const BookingPage()),//HomePage()),
+                              try {
+                                await FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
                                 );
+                              } catch (e) {
+                                print(e);
+                              }
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomePage()),
+                              );
                             }
                           },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(vertical: 16.0),
-                            child: Text('Sign Up', style: TextStyle(fontSize: 18)),
+                            child:
+                                Text('Sign Up', style: TextStyle(fontSize: 18)),
                           ),
                         ),
                         const SizedBox(height: 16),
